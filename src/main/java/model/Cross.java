@@ -1,7 +1,7 @@
 package model;
 
 public class Cross extends Sign {
-    String name ="O";
+    String name ="X";
 
     public Cross() {
     }

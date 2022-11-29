@@ -1,7 +1,7 @@
 package model;
 
 public class Circle extends Sign {
-    String name = "X";
+    String name = "O";
 
     public Circle() {
     }
