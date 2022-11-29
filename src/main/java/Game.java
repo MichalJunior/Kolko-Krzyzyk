@@ -5,10 +5,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Game {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
 
         List<Sign> listSigns = new ArrayList<>();
-       Moving.play(listSigns);
+        try {
+            Moving.play(listSigns);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
 
