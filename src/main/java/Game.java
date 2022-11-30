@@ -8,6 +8,8 @@ public class Game {
     public static void main(String[] args) {
 
         List<Sign> listSigns = new ArrayList<>();
+
+
         try {
             Moving.play(listSigns);
         } catch (IOException e) {

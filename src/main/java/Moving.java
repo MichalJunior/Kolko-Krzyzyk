@@ -5,25 +5,28 @@ import model.Sign;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Moving {
+
+    public static List<Integer> wins = new ArrayList<>();
+
+
     public static void play(List<Sign> listSigns) throws IOException {
         fillEmptyBoard(listSigns);
+        wins.add(0);
+        wins.add(0);
 
-        System.out.println("Welcome in game Circle and Cross");
+        System.out.println("Welcome in game Circle and Cross        +---WINS---+");
         int round = 0;
         while (true) {
-            System.out.println("1|2|3        " + listSigns.get(0).getName() + "|" + listSigns.get(1).getName() + "|" + listSigns.get(2).getName());
+            System.out.println("1|2|3        " + listSigns.get(0).getName() + "|" + listSigns.get(1).getName() + "|" + listSigns.get(2).getName() + "                       X- " + wins.get(0) + ":" + wins.get(1) + " -O");
             System.out.println("4|5|6        -----");
             System.out.println("7|8|9        " + listSigns.get(3).getName() + "|" + listSigns.get(4).getName() + "|" + listSigns.get(5).getName());
             System.out.println("             -----");
             System.out.println("             " + listSigns.get(6).getName() + "|" + listSigns.get(7).getName() + "|" + listSigns.get(8).getName());
-
             Moving.makeMove(round, listSigns);
             List<String> solutions = new ArrayList<>();
-
             addSolutions(solutions);
 
             for (String solution : solutions) {
@@ -32,7 +35,12 @@ public class Moving {
                         !listSigns.get(Integer.parseInt(solution.substring(0, 1))).getName().equals(" ") &&
                         !listSigns.get(Integer.parseInt(solution.substring(1, 2))).getName().equals(" ") &&
                         !listSigns.get(Integer.parseInt(solution.substring(2))).getName().equals(" ")) {
-                    System.out.println("------------------------------------------------\n           ***  Player - " + listSigns.get(0).getName() + "-  WIN  ***  \n------------------------------------------------");
+                    if (listSigns.get(Integer.parseInt(solution.substring(0, 1))).getName().equals("X")) {
+                        wins.set(0, wins.get(0) + 1);
+                    } else {
+                        wins.set(1, wins.get(1) + 1);
+                    }
+                    System.out.println("------------------------------------------------\n           ***  Player - " + listSigns.get(Integer.parseInt(solution.substring(0, 1))).getName() + "-  WIN  ***  \n------------------------------------------------");
                     listSigns.clear();
                     play(listSigns);
                 }
@@ -60,9 +68,8 @@ public class Moving {
 
     public static void makeMove(int round, List<Sign> listSigns) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-
         if (round % 2 == 0) {
-            System.out.print("Player -O- Insert your choice:");
+            System.out.print("Player 'O' Insert your choice:");
             int firstPlayerChoice = Integer.parseInt(bufferedReader.readLine()) - 1;
             if (listSigns.get(firstPlayerChoice).getName().equals(" ")) {
                 listSigns.set(firstPlayerChoice, new Circle());
@@ -71,7 +78,7 @@ public class Moving {
                 makeMove(round, listSigns);
             }
         } else {
-            System.out.print("Player -X- Insert your choice:");
+            System.out.print("Player 'X' Insert your choice:");
             int secondPlayerChoice = Integer.parseInt(bufferedReader.readLine()) - 1;
             if (listSigns.get(secondPlayerChoice).getName().equals(" ")) {
                 listSigns.set(secondPlayerChoice, new Cross());
